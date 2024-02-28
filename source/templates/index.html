@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+</head>
+
+<body>
+    <h1>Youtube downloader</h1>
+    <form action="/video" method="post">
+        <div class="url-form">
+            <input type="text" name="url" id="user-url" placeholder="Enter video url"></input>
+            <input type="submit" value="Download" id="download-button"></input>
+        </div>
+    </form>
+    {% if streams_info != None %}
+    <div class="video-download">
+        <table>
+            <tr>
+                <th>Resolution</th>
+                <th>Type</th>
+                <th>Bitrate [k]</th>
+                <th>Video codec</th>
+                <th>Audio codec</th>
+                <th>File size [Mb]</th>
+                <th>Download</th>
+            </tr>
+            {% for stream in streams_info%}
+            <tr>
+                {% for i in range(0, 6)%}
+                <td>{{ stream[i] }}</td>
+                {% endfor %}
+                <td> <a class="button" href="\download{{stream[6]}}">Download</a> </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+
+    {% if video_info != None %}
+    <div class="video-info">
+        <p>Video information</p>
+        <table>
+            {% for key, val in video_info.items() %}
+            {% if val != None %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ val }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</body>
+
+</html>
